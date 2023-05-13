@@ -51,6 +51,21 @@ function App() {
   return (
 	<CodeViewerProvider>	
     <div className='tasks'>
+			<div className='help'>
+					<center>
+					<h1>Simple-Shell Test Cases</h1>
+					</center>
+			<h2>How To Use??</h2>
+			<p>
+				<span style={{fontWeight: "bold"}}>Super simple</span>, 
+					you need to download the <code>checker.bash</code> script
+					and the <u>test case script</u><br />
+					both can be downloaded 
+					by selecting the task and the checker test case.<br />
+					Then execute <code>./checker.bash ./hsh {"<test case script>"}</code>
+			</p>
+			</div>
+				<hr />
 			<ul>
 				{data.map(
 					(obj, i) => <Task key={`task-${i}`} {...obj.correction} index={i} />

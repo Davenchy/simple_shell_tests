@@ -40,6 +40,16 @@ ul > li {
 	padding: 0 5px;
 }
 
+.help {
+	padding: 10px 40px;
+}
+
+.help p {
+	padding-left: 20px;
+	line-height: 28px;
+	word-spacing: 4px;
+}
+
 @media only screen and (max-width: 600px) {
 	html *, h3, h2, h4 {
 		padding: 0;
@@ -82,5 +92,19 @@ ul > li {
 
 	.file {
 		padding: 5px 0;
+	}
+
+	.help h1 {
+		font-size: 7vw;
+		margin-bottom: 18px;
+	}
+
+	.help h2 {
+		font-size: 5vw;
+		margin-bottom: 10px;
+	}
+
+	.help p {
+		font-size: 4vw;
 	}
 }
