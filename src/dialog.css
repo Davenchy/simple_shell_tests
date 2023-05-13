@@ -7,6 +7,7 @@
 	background-color: #333;
 	border-radius: 6px;
 	padding: 16px;
+	overflow: hidden;
 }
 
 .dialog * {
@@ -57,16 +58,55 @@
 	align-items: center;
 }
 
-.dialog-header * {
-	display: inline-block;
-	padding: 0 4px;
-}
-
 .dialog-header h3 {
 	flex-grow: 1;
 }
 
-
 .dialog-header .btn {
 	cursor: pointer;
+}
+
+.dialog-header .tools {
+	display: flex;
+	align-items: center;
+}
+
+.dialog-header .tools > * {
+	padding: 0 6px;
+}
+
+@media only screen and (max-width: 600px) {
+	.dialog {
+		transform: translate(0, 0);
+		top: 0;
+		left: 0;
+		border-radius: 0;
+		width: 100%;
+		height: 100%;
+		padding: 10px;
+	}
+
+	.dialog-header {
+		flex-direction: column-reverse;
+		align-items: start;
+	}
+
+	.dialog-header .tools > * {
+		padding: 0 14px;
+	}
+
+	.dialog-header .tools {
+		align-self: self-end;
+	}
+	.dialog-header .title {
+		padding: 20px 0;
+	}	
+
+	.dialog pre {
+		max-height: 79vh;
+	}
+
+	.dialog code {
+		font-size: 2.7vw;
+	}
 }

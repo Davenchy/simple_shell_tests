@@ -1,6 +1,6 @@
 import {
-	faChevronDown as iDown,
-	faChevronRight as iRight
+	faChevronRight as iClose,
+	faChevronDown as iOpen
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon as FAI } from "@fortawesome/react-fontawesome";
 import { useState } from "react"
@@ -9,11 +9,11 @@ export default function Block({children, name, color, size}) {
 	const [isOpen, setViewState] = useState(false);
 	const hasChildren = !!children && children.length;
 	const toggleViewState = _ => hasChildren && setViewState(s => !s);
-	return <li>
+	return <li class="block">
 		<div className="list-item">
-		{hasChildren ? <FAI icon={isOpen ? iRight : iDown}/> : null}
+		{hasChildren ? <FAI icon={isOpen ? iOpen : iClose}/> : null}
 		<h3 onClick={toggleViewState} style={{"cursor": "pointer"}}>
-			<span style={{
+			<span className="item-name" style={{
 				color: color || "inherit",
 				fontSize: size ? `${size*12}px` : "inherit",
 			}} dangerouslySetInnerHTML={{__html: name}}></span>

@@ -10,13 +10,6 @@ import {
 
 const CodeViewerContext = createContext();
 
-const reduceState = {
-	url: "",
-	code: "",
-	filename: "",
-	visible: false
-};
-
 function useCodeFetcher() {
 	const {url, close} = useContext(CodeViewerContext);
 	const [code, setCode] = useState("")
@@ -71,12 +64,14 @@ function CodeViewer() {
 		</div> :
 		<div className="dialog">
 			<div className="dialog-header">
-				<h3>file: /assets/files/5/3/checker.bash</h3>
-				<span className="btn" onClick={toggleFullscreen}>
-					<FAI icon={iFullscreen} />
-				</span>
-				<a href={url} className="btn"><FAI icon={iDownload}/></a>
-				<p className="close btn" onClick={close}>&times;</p>
+				<h3 className="title">file: /assets/files/5/3/checker.bash</h3>
+				<div className="tools">
+					<span className="btn" onClick={toggleFullscreen}>
+						<FAI icon={iFullscreen} />
+					</span>
+					<a href={url} className="btn"><FAI icon={iDownload}/></a>
+					<p className="close btn" onClick={close}>&times;</p>
+				</div>
 			</div>
 			<Code code={code} />
 		</div>

@@ -21,6 +21,7 @@ code {
 .tasks {
 	max-height: 100vh;
 	overflow: auto;
+	padding: 20px 0;
 }
 
 .file {
@@ -37,4 +38,49 @@ ul > li {
 .list-item * {
 	display: inline-block;
 	padding: 0 5px;
+}
+
+@media only screen and (max-width: 600px) {
+	html *, h3, h2, h4 {
+		padding: 0;
+		margin: 0;
+	}
+
+	.item-name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		width: calc(100vw - 100px);
+	}
+
+	.block {
+		padding: 10px;
+		padding-right: 0;
+	}
+
+	.block .block {
+		padding: 10px 30px;
+		padding-right: 0;
+	}
+
+	.block .block ul {
+		padding: 10px 40px;
+		padding-right: 0;
+		padding-bottom: 5px;
+	}
+
+	.block .item-name {
+		font-size: 18px !important;
+	}
+
+	.block .block .item-name {
+		font-size: 16px !important;
+	}
+
+	.block .block .block * {
+		font-size: 10px !important;
+	}
+
+	.file {
+		padding: 5px 0;
+	}
 }
