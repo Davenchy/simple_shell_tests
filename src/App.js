@@ -2,6 +2,9 @@ import './App.css';
 import data from "./tasks.json"
 import Block from './Block'
 import {CodeViewerProvider, useCodeViewer} from './CodeViewer';
+import {FontAwesomeIcon as FAI} from "@fortawesome/react-fontawesome"
+import { faDownload as iDownload } from "@fortawesome/free-solid-svg-icons"
+import {createUrl} from './utils.js'
 
 function Check({index, title, files, points, taskIndex, check_label}) {
 	const { open } = useCodeViewer();
@@ -17,8 +20,13 @@ function Check({index, title, files, points, taskIndex, check_label}) {
 						{files.map(
 							(file, i) =>
 						<li key={i}>
-							<div className="file" onClick={() =>
-								openFile(file.name)}>{file.name}</div>
+							<div className="file">
+								<span onClick={() => openFile(file.name)}>{file.name}</span>
+									&nbsp;
+							<a href={createUrl(taskIndex, index, file.name)} className="btn">
+								<FAI icon={iDownload}/>
+							</a>
+							</div>
 						</li>
 						)}
 					</ul>

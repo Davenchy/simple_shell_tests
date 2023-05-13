@@ -1,5 +1,5 @@
 import "./dialog.css"
-import {useContext, createContext, useState, useEffect, useRef, forwardRef} from "react"
+import {useContext, createContext, useState, useEffect } from "react"
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import {atomOneDark} from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import {FontAwesomeIcon as FAI} from "@fortawesome/react-fontawesome"
@@ -7,11 +7,12 @@ import {
 	faDownload as iDownload,
 	faExpandAlt as iFullscreen
 } from "@fortawesome/free-solid-svg-icons"
+import { createUrl } from "./utils"
 
 const CodeViewerContext = createContext();
 
 function useCodeFetcher() {
-	const {url, close} = useContext(CodeViewerContext);
+	const { url, close, meta } = useContext(CodeViewerContext);
 	const [code, setCode] = useState("")
 
 	useEffect(() => {
@@ -24,7 +25,7 @@ function useCodeFetcher() {
 				res.text().then(setCode)
 			})
 	}, [url]);
-	return [url, code, close];
+	return [url, code, close, meta];
 }
 
 function Code(props) {
@@ -38,12 +39,13 @@ function Code(props) {
 
 
 function CodeViewer() {
-	const [url, code, close] = useCodeFetcher();
+	const [url, code, close, meta] = useCodeFetcher();
+	const { taskIndex, checkIndex, filename } = meta;
 	const [isFullscreen, setFullscreen] = useState(false);
 	const toggleFullscreen = () => isFullscreen ?
 		document.exitFullscreen() : document.body.requestFullscreen();
 	useEffect(() => {
-		const handler = e => setFullscreen(!!document.fullscreenElement);
+		const handler = _ => setFullscreen(!!document.fullscreenElement);
 		const key_handler = e => (
 			(e.key == "Escape" && close()) ||
 			(e.key == "f" && code && toggleFullscreen())
@@ -64,7 +66,9 @@ function CodeViewer() {
 		</div> :
 		<div className="dialog">
 			<div className="dialog-header">
-				<h3 className="title">file: /assets/files/5/3/checker.bash</h3>
+				<h3 className="title">
+					file: {createUrl(taskIndex, checkIndex, filename)}
+				</h3>
 				<div className="tools">
 					<span className="btn" onClick={toggleFullscreen}>
 						<FAI icon={iFullscreen} />
@@ -81,11 +85,14 @@ function CodeViewer() {
 
 export function CodeViewerProvider(props) {
 	const [url, setUrl] = useState("");
-	const open = (filename, taskIndex, checkIndex) => 
+	const [meta, setMeta] = useState({});
+	const open = (filename, taskIndex, checkIndex) => {
+		setMeta({filename, taskIndex, checkIndex})
 		setUrl(`/assets/files/${taskIndex}/${checkIndex}/${filename}`)
+	}
 	const close = () => setUrl("")
 
-	return <CodeViewerContext.Provider value={{url, setUrl, open, close}}>
+	return <CodeViewerContext.Provider value={{url, setUrl, meta, setMeta, open, close}}>
 		<CodeViewer />
 		{props.children}
 	</CodeViewerContext.Provider>

@@ -9,7 +9,7 @@ export default function Block({children, name, color, size}) {
 	const [isOpen, setViewState] = useState(false);
 	const hasChildren = !!children && children.length;
 	const toggleViewState = _ => hasChildren && setViewState(s => !s);
-	return <li class="block">
+	return <li className="block">
 		<div className="list-item">
 		{hasChildren ? <FAI icon={isOpen ? iOpen : iClose}/> : null}
 		<h3 onClick={toggleViewState} style={{"cursor": "pointer"}}>
