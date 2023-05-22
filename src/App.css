@@ -27,6 +27,11 @@ code {
 .file {
 	color: #f44336;
 	cursor: pointer;
+	padding-top: 4px;
+}
+
+.file * {
+	padding: 0 4px;
 }
 
 ul > li {

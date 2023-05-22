@@ -8,25 +8,21 @@ import {
 	faExpandAlt as iFullscreen,
 	faCopy as iCopy,
 } from "@fortawesome/free-solid-svg-icons"
-import { copyText, createUrl } from "./utils"
+import { copyText, createUrl, fetchCode } from "./utils"
 
-const CodeViewerContext = createContext();
+const CodeViewerContext = createContext()
 
 function useCodeFetcher() {
-	const { url, close, meta } = useContext(CodeViewerContext);
+	const { url, close, meta } = useContext(CodeViewerContext)
 	const [code, setCode] = useState("")
 
 	useEffect(() => {
 		if (!url)
-			setCode("");
+			setCode("")
 		else
-			fetch(url).then(res => {
-				if (!res.ok)
-					setCode("")
-				res.text().then(setCode)
-			})
+			fetchCode(url).then(setCode).catch(_ => setCode(""))
 	}, [url]);
-	return [url, code, close, meta];
+	return [url, code, close, meta]
 }
 
 function Code(props) {

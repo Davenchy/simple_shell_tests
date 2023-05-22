@@ -3,12 +3,17 @@ import data from "./tasks.json"
 import Block from './Block'
 import {CodeViewerProvider, useCodeViewer} from './CodeViewer';
 import {FontAwesomeIcon as FAI} from "@fortawesome/react-fontawesome"
-import { faDownload as iDownload } from "@fortawesome/free-solid-svg-icons"
-import {createUrl} from './utils.js'
+import {
+	faDownload as iDownload,
+	faCopy as iCopy,
+} from "@fortawesome/free-solid-svg-icons"
+import {copyText, createUrl, fetchCode} from './utils.js'
 
 function Check({index, title, files, points, taskIndex, check_label}) {
 	const { open } = useCodeViewer();
 	const openFile = name => open(name, taskIndex, index)
+	const copy = name => fetchCode(createUrl(taskIndex, index, name))
+		.then(code => copyText(code));
 
 	return <Block name={`${index}. ${title}`} size="1.3">
 		{ check_label ? <p>Type: {check_label}</p> : null}
@@ -22,7 +27,7 @@ function Check({index, title, files, points, taskIndex, check_label}) {
 						<li key={i}>
 							<div className="file">
 								<span onClick={() => openFile(file.name)}>{file.name}</span>
-									&nbsp;
+								<span onClick={() => copy(file.name)}><FAI icon={iCopy} /></span>
 							<a href={createUrl(taskIndex, index, file.name)} className="btn">
 								<FAI icon={iDownload}/>
 							</a>
