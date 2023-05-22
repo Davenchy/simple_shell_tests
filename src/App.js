@@ -64,6 +64,8 @@ function App() {
 					by selecting the task and the checker test case.<br />
 					Then execute <code>./checker.bash ./hsh {"<test case script>"}</code>
 			</p>
+			<p>Only use to solve failed tasks after using the checker, Otherwise
+					you will waste your time.</p>
 			</div>
 				<hr />
 			<ul>

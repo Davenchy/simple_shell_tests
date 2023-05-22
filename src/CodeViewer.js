@@ -5,9 +5,10 @@ import {atomOneDark} from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import {FontAwesomeIcon as FAI} from "@fortawesome/react-fontawesome"
 import {
 	faDownload as iDownload,
-	faExpandAlt as iFullscreen
+	faExpandAlt as iFullscreen,
+	faCopy as iCopy,
 } from "@fortawesome/free-solid-svg-icons"
-import { createUrl } from "./utils"
+import { copyText, createUrl } from "./utils"
 
 const CodeViewerContext = createContext();
 
@@ -45,16 +46,17 @@ function CodeViewer() {
 	const toggleFullscreen = () => isFullscreen ?
 		document.exitFullscreen() : document.body.requestFullscreen();
 	useEffect(() => {
-		const handler = _ => setFullscreen(!!document.fullscreenElement);
-		const key_handler = e => (
-			(e.key == "Escape" && close()) ||
-			(e.key == "f" && code && toggleFullscreen())
+		const onFullscreenChange = _ =>
+			setFullscreen(!!document.fullscreenElement);
+		const onKeyDown = e => (
+			(e.key === "Escape" && close()) ||
+			(e.key === "f" && code && toggleFullscreen())
 		)
-		document.body.addEventListener("fullscreenchange", handler)
-		document.body.addEventListener("keydown", key_handler);
+		document.body.addEventListener("fullscreenchange", onFullscreenChange)
+		document.body.addEventListener("keydown", onKeyDown);
 		return () => {
-			document.body.removeEventListener("fullscreenchange", handler)
-			document.body.removeEventListener("keydown", key_handler)
+			document.body.removeEventListener("fullscreenchange", onFullscreenChange)
+			document.body.removeEventListener("keydown", onKeyDown)
 		}
 	}, [code])
 
@@ -74,7 +76,10 @@ function CodeViewer() {
 						<FAI icon={iFullscreen} />
 					</span>
 					<a href={url} className="btn"><FAI icon={iDownload}/></a>
-					<p className="close btn" onClick={close}>&times;</p>
+					<span className="btn" onClick={() => copyText(code)}>
+						<FAI icon={iCopy} />
+					</span>
+					<p className="btn close" onClick={close}>&times;</p>
 				</div>
 			</div>
 			<Code code={code} />
